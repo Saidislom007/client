@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-50 overflow-hidden p-6">
-      
+      <button
+        className="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded font-semibold mb-6"
+        onClick={() => navigate("/admin")}
+      >
+        Admin
+      </button>
 
       {/* 🔹 Soft floating circles for visual interest */}
       <div className="absolute top-0 -left-16 w-72 h-72 bg-blue-200 rounded-full blur-3xl opacity-20 animate-pulse-slow"></div>
