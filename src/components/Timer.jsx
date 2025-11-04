@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Timer } from "lucide-react";
 
-export default function Timerr({ minutes, onTimeUp, isRunning = true }) {
+export default function Timerr({ minutes=15, onTimeUp, isRunning = true }) {
   const [timeLeft, setTimeLeft] = useState(minutes * 60);
 
   useEffect(() => {
