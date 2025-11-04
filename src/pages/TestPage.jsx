@@ -127,7 +127,7 @@ export default function TestPage() {
         <h2 className="text-xl font-bold text-gray-700">
           Savol {current + 1} / {questions.length}
         </h2>
-        <Timerr minutes={localStorage.getItem("adminTimer")} onTimeUp={handleTimeUp} isRunning={!finished} />
+        <Timerr minutes={15} onTimeUp={handleTimeUp} isRunning={!finished} />
       </div>
 
       {/* Progress bar */}
