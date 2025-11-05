@@ -1,30 +1,34 @@
-import { useState } from 'react'
-import { Routes,Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import TestApp from './pages/TestPage'
-import Admin from './pages/Admin'
-import AdminPage from './pages/AdminPage'
 import UserForm from './pages/UserForm'
-
+import AdminLogin from './pages/AdminLogin'
+import VerifyCode from './pages/VerifyCode'
+import AdminPage from './pages/AdminPage'
+import ProtectedRoute from './components/ProtectedRoute'
 import './App.css'
-import { Toaster } from "react-hot-toast";
-
 
 function App() {
-
-
   return (
-    <>
-        <Toaster position="top-right" />
-        <Routes>
-          
-          <Route path="/" element={<Home />}/>
-          <Route path="/test" element={<TestApp />}/>
-          <Route path="/re" element={<UserForm />}/>
-          <Route path="/admin" element={<AdminPage />}/>
 
-        </Routes>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/test" element={<TestApp />} />
+        <Route path="/re" element={<UserForm />} />
+
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/verify" element={<VerifyCode />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+   
   )
 }
 

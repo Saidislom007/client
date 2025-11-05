@@ -6,7 +6,7 @@ import ResultsList from "../components/ResultsList";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
-import { ChevronUp, ChevronDown, Users, Award } from "lucide-react";
+import { ChevronUp, ChevronDown, Users, Award, NotepadTextIcon,LogOut } from "lucide-react";
 
 export default function AdminPage() {
   const [questions, setQuestions] = useState([]);
@@ -22,10 +22,20 @@ export default function AdminPage() {
   const [userPage, setUserPage] = useState(1);
   const [resultsPage, setResultsPage] = useState(1);
   const itemsPerPage = 5;
-// 
+  // 
 
   const navigate = useNavigate();
+  const handleLogout = () => {
+    // LocalStorage dan admin flag yoki tokenni o‘chiramiz
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("auth_token"); // agar JWT token saqlangan bo‘lsa
 
+    // Browser cookie dan JWT token o‘chirish (agar cookie ishlatilsa)
+    document.cookie = "auth_token=; Max-Age=0; path=/;";
+
+    toast.success("Siz tizimdan chiqdingiz!");
+    navigate("/"); // login yoki home page ga yo‘naltirish
+  };
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -77,6 +87,15 @@ export default function AdminPage() {
       toast.error("Savolni o‘chirishda xatolik!");
     }
   };
+  const handleDeleteUser = async (id) => {
+    try {
+      await fetch(`${import.meta.env.VITE_BC_URL}/users/${id}`, { method: "DELETE" });
+      setUsers(users.filter((u) => u.id !== id));
+      toast.success("User o‘chirildi!");
+    } catch {
+      toast.error("User o‘chirishda xatolik!");
+    }
+  };
 
   // 🔹 Filter + Sort
   const filteredUsers = users
@@ -113,10 +132,18 @@ export default function AdminPage() {
     <div className="max-w-7xl mx-auto mt-8 p-6 space-y-8">
       <h1 className="text-4xl font-bold text-center mb-6 flex items-center justify-center gap-2"><Users className="w-8 h-8" /> Smart Coders Academy - Admin Panel</h1>
       <button
-        className="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded font-semibold mb-6"
+        className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 px-6 text-white py-2 px-4 border-black border-2 border-b-5 border-r-5 rounded-2xl font-semibold mb-6"
         onClick={() => navigate("/test")}
       >
-        Test Rejimini Sinovdan O'tkazish
+        <NotepadTextIcon className="w-4 h-4" />
+        Test Rejiminiga Kirish
+      </button>
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2 px-4 border-black border-2 border-b-5 border-r-5 rounded-2xl mt-2 md:mt--10 ml-270"
+      >
+        <LogOut className="w-4 h-4" />
+        Logout
       </button>
 
       {/* 🔹 Savollar */}
@@ -188,7 +215,7 @@ export default function AdminPage() {
           onChange={(e) => { setUserSearch(e.target.value); setUserPage(1); }}
           className="w-full mb-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <UserList users={filteredUsers} />
+        <UserList users={filteredUsers} onDelete={handleDeleteUser} />
         <div className="flex justify-center gap-2 mt-2">
           {Array.from({ length: totalUserPages }, (_, i) => (
             <button
