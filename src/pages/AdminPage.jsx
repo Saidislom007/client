@@ -22,7 +22,6 @@ export default function AdminPage() {
   const [userPage, setUserPage] = useState(1);
   const [resultsPage, setResultsPage] = useState(1);
   const itemsPerPage = 5;
-  // 
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -132,7 +131,7 @@ export default function AdminPage() {
     <div className="max-w-7xl mx-auto mt-8 p-6 space-y-8">
       <h1 className="text-4xl font-bold text-center mb-6 flex items-center justify-center gap-2"><Users className="w-8 h-8" /> Smart Coders Academy - Admin Panel</h1>
       <button
-        className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 px-6 text-white py-2 px-4 border-black border-2 border-b-5 border-r-5 rounded-2xl font-semibold mb-6"
+        className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 px-6  border-black border-2 border-b-5 border-r-5 rounded-2xl font-semibold mb-6"
         onClick={() => navigate("/test")}
       >
         <NotepadTextIcon className="w-4 h-4" />
