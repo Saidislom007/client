@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { User, Phone, IdCard } from "lucide-react";
+import { User, Phone, IdCard,MapPin,CalendarFold   } from "lucide-react";
 
 export default function UserForm() {
   const navigate = useNavigate();
   const [full_name, setFullName] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
   const [id_card_number, setIdCardNumber] = useState("");
+  const [birth_date, setBirthDate] = useState("");
+  const [adress, setAdress] = useState("");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -22,7 +24,7 @@ export default function UserForm() {
       const res = await fetch(`${import.meta.env.VITE_BC_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ full_name, phone_number, id_card_number }),
+        body: JSON.stringify({ full_name, phone_number, id_card_number,adress,birth_date }),
       });
 
       const data = await res.json();
@@ -93,6 +95,26 @@ export default function UserForm() {
               className="bg-transparent flex-1 outline-none placeholder-gray-400 text-white"
               value={id_card_number}
               onChange={(e) => setIdCardNumber(e.target.value)}
+            />
+          </div>
+           <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus-within:border-indigo-400 transition">
+            <CalendarFold className="text-indigo-300 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Tug'ilgan yilingiz"
+              className="bg-transparent flex-1 outline-none placeholder-gray-400 text-white"
+              value={birth_date}
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
+          </div>
+           <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus-within:border-indigo-400 transition">
+            <MapPin className="text-indigo-300 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Yashash  manzilingiz (Yoqubov MFY Yoqubov ko'chasi 4-uy)"
+              className="bg-transparent flex-1 outline-none placeholder-gray-400 text-white"
+              value={adress}
+              onChange={(e) => setAdress(e.target.value)}
             />
           </div>
 

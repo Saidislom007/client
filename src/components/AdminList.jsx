@@ -5,24 +5,26 @@ export default function AdminList({ questions, onDelete }) {
     <div>
       <ul className="space-y-3">
         {questions.map((q) => {
-          // Agar options string bo'lsa, arrayga aylantiramiz
-          const optionsArray = Array.isArray(q.options)
-            ? q.options
-            : q.options.split(",").map((o) => o.trim());
+          // options mavjudligini tekshiramiz va arrayga aylantiramiz
+          const optionsArray = q.options
+            ? Array.isArray(q.options)
+              ? q.options
+              : q.options.split(",").map((o) => o.trim())
+            : [];
 
           return (
             <li
-              key={q.id}
+              key={q.id}  // unique key har bir question uchun
               className="p-4 border-2 border-b-5 border-r-5 rounded-2xl bg-white shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-3"
             >
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <Edit3 className="w-5 h-5 text-gray-600" />
-                  <span className="font-semibold text-gray-800">{q.question}</span>
+                  <span className="font-semibold text-gray-800">{q.question || "Savol mavjud emas"}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-gray-700">{q.answer}</span>
+                  <span className="text-gray-700">{q.answer || "Javob mavjud emas"}</span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <List className="w-5 h-5 text-gray-600" />
