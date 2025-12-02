@@ -4,7 +4,7 @@ import AdminList from "../components/AdminList";
 import UserList from "../components/UserList";
 import ResultsList from "../components/ResultsList";
 import { toast } from "react-hot-toast";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Users, NotepadTextIcon, LogOut } from "lucide-react";
 
 export default function AdminPage() {
@@ -14,7 +14,7 @@ export default function AdminPage() {
 
   const [loading, setLoading] = useState(true);
   const [userSearch, setUserSearch] = useState("");
-  const [resultSearch, setResultSearch] = useState("");
+  the [resultSearch, setResultSearch] = useState("");
   const [sortScoreAsc, setSortScoreAsc] = useState(true);
 
   const [userPage, setUserPage] = useState(1);
@@ -31,7 +31,7 @@ export default function AdminPage() {
     navigate("/");
   };
 
-  // 🔹 Faqat mavjud endpointlardan maʼlumot olish
+  // 🔹 Fetch Data
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -45,7 +45,6 @@ export default function AdminPage() {
       setQuestions(await qRes.json());
       setUsers(await uRes.json());
       setResults(await rRes.json());
-
     } catch {
       toast.error("Ma’lumotlarni olishda xatolik yuz berdi!");
     } finally {
@@ -57,6 +56,7 @@ export default function AdminPage() {
     fetchData();
   }, []);
 
+  // 🔹 Add Question
   const handleAddQuestion = async (newQuestion) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_BC_URL}/questions`, {
@@ -75,6 +75,7 @@ export default function AdminPage() {
     }
   };
 
+  // 🔹 Delete Question
   const handleDeleteQuestion = async (id) => {
     try {
       await fetch(`${import.meta.env.VITE_BC_URL}/questions/${id}`, { method: "DELETE" });
@@ -85,6 +86,7 @@ export default function AdminPage() {
     }
   };
 
+  // 🔹 Delete User
   const handleDeleteUser = async (id) => {
     try {
       await fetch(`${import.meta.env.VITE_BC_URL}/users/${id}`, { method: "DELETE" });
@@ -95,18 +97,18 @@ export default function AdminPage() {
     }
   };
 
-  // 🔹 Filter + Pagination
+  // 🔹 Filter + Pagination fix (undefined check qo‘shilgan)
   const filteredUsers = users
     .filter(u =>
-      u.full_name.toLowerCase().includes(userSearch.toLowerCase()) ||
-      u.phone_number.includes(userSearch) ||
-      u.id_card_number.includes(userSearch)
+      (u.full_name ?? "").toLowerCase().includes((userSearch ?? "").toLowerCase()) ||
+      (u.phone_number ?? "").includes(userSearch) ||
+      (u.id_card_number ?? "").includes(userSearch)
     )
     .slice((userPage - 1) * itemsPerPage, userPage * itemsPerPage);
 
   const filteredResults = results
     .filter(r =>
-      r.full_name.toLowerCase().includes(resultSearch.toLowerCase())
+      (r.full_name ?? "").toLowerCase().includes((resultSearch ?? "").toLowerCase())
     )
     .sort((a, b) => sortScoreAsc ? a.score - b.score : b.score - a.score)
     .slice((resultsPage - 1) * itemsPerPage, resultsPage * itemsPerPage);
@@ -115,13 +117,13 @@ export default function AdminPage() {
 
   const totalUserPages = Math.ceil(
     users.filter(u =>
-      u.full_name.toLowerCase().includes(userSearch.toLowerCase())
+      (u.full_name ?? "").toLowerCase().includes((userSearch ?? "").toLowerCase())
     ).length / itemsPerPage
   );
 
   const totalResultsPages = Math.ceil(
     results.filter(r =>
-      r.full_name.toLowerCase().includes(resultSearch.toLowerCase())
+      (r.full_name ?? "").toLowerCase().includes((resultSearch ?? "").toLowerCase())
     ).length / itemsPerPage
   );
 
@@ -187,10 +189,8 @@ export default function AdminPage() {
       <section className="bg-white p-4 rounded-2xl shadow-lg">
         <h2 className="text-2xl font-semibold mb-4">Natijalar</h2>
 
-        {/* Boshqaruv tugmalari */}
         <div className="flex gap-5">
           <button className="p-2 border-2 border-b-5 border-r-5 rounded-2xl bg-white shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-            
             <Link to={"https://docs.google.com/spreadsheets/d/17HZATBfmifUVaEMU94IHZi4iheVStEzuMhurnC76BAY/edit?gid=0#gid=0"}>See Sheets</Link>
           </button>
 
@@ -202,36 +202,33 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* Qidiruv inputi */}
         <input
           type="text"
           placeholder="Natijalarni qidiring..."
           value={resultSearch}
           onChange={(e) => {
             setResultSearch(e.target.value);
-            setResultsPage(1); // qidiruv bo‘lganda sahifani 1 ga o‘rnatish
+            setResultsPage(1);
           }}
           className="w-full mb-2 p-2 border border-gray-300 rounded-md"
         />
 
-        {/* Natijalar ro‘yxati */}
         <ResultsList results={filteredResults} />
 
-        {/* Pagination */}
         <div className="flex justify-center gap-2 mt-2">
           {Array.from({ length: totalResultsPages }, (_, i) => (
             <button
               key={i}
               onClick={() => setResultsPage(i + 1)}
-              className={`px-3 py-1 border rounded ${resultsPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-100"
-                }`}
+              className={`px-3 py-1 border rounded ${
+                resultsPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-100"
+              }`}
             >
               {i + 1}
             </button>
           ))}
         </div>
       </section>
-
 
     </div>
   );
