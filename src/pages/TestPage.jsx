@@ -29,7 +29,7 @@ export default function TestPage() {
 
     const fetchQuestions = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BC_URL}/questions`);
+        const res = await fetch(`${import.meta.env.VITE_BC_URL}/exam/questions`);
         const data = await res.json();
         setQuestions(data);
       } catch {

@@ -9,7 +9,7 @@ import AdminLogin from "./pages/AdminLogin";
 import VerifyCode from "./pages/VerifyCode";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import Dashboard from "./pages/Dashboard";
 import "./App.css";
 
 export default function App() {
@@ -51,6 +51,7 @@ export default function App() {
           <Route path="/re" element={<UserForm />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/verify" element={<VerifyCode />} />
+           {/* <Route path="/d" element={<Dashboard />} /> */}
           <Route
             path="/admin"
             element={
