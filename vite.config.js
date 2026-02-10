@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   
   server: {
-    allowedHosts: ['client-production-1ce9.up.railway.app']
+    allowedHosts: ['client-production-1ce9.up.railway.app','www.alphadev.uz']
   },
 
   preview: {
-    allowedHosts: ['client-production-1ce9.up.railway.app']
+    allowedHosts: ['client-production-1ce9.up.railway.app','www.alphadev.uz']
   }
 })
