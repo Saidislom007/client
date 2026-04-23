@@ -85,7 +85,7 @@ export default function TestPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id_card_number: userIdCard,
+          id_card_number: "AD****",
           score: totalScore,
           total: questions.length,
         }),
