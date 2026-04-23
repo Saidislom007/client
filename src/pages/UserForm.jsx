@@ -7,7 +7,7 @@ export default function UserForm() {
   const navigate = useNavigate();
   const [full_name, setFullName] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
-  const [id_card_number, setIdCardNumber] = useState("");
+  const [id_card_number, setIdCardNumber] = useState("AD******");
   const [birth_date, setBirthDate] = useState("");
   const [adress, setAdress] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function UserForm() {
       setUser(userData);
 
       toast.success("Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz!");
-      navigate(`/test?user=${id_card_number}`);
+      navigate(`/test?user=${full_name}`);
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -84,17 +84,6 @@ export default function UserForm() {
               className="bg-transparent flex-1 outline-none placeholder-gray-400 text-white"
               value={phone_number}
               onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </div>
-
-          <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus-within:border-indigo-400 transition">
-            <IdCard className="text-indigo-300 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="ID karta raqami"
-              className="bg-transparent flex-1 outline-none placeholder-gray-400 text-white"
-              value={id_card_number}
-              onChange={(e) => setIdCardNumber(e.target.value)}
             />
           </div>
            <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus-within:border-indigo-400 transition">

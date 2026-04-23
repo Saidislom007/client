@@ -26,7 +26,7 @@ export default function Timerr({ minutes=15, onTimeUp, isRunning = true }) {
 
   return (
     <div className="flex justify-center items-center gap-2 text-lg font-mono">
-      <span className="bg-gray-100 px-4 py-2 rounded-xl shadow-sm border border-gray-300 flex gap-1 font-extrabold">
+      <span className=" px-4 py-2 rounded-xl shadow-sm border border-gray-300 flex gap-1 font-extrabold">
         <Timer/> {mins}:{secs.toString().padStart(2, "0")}
       </span>
     </div>
